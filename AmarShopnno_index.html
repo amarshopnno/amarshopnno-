@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#087f5b">
+<title>AmarShopnno.com — অনলাইন শপ</title>
+<style>
+:root{--green:#087f5b;--dark:#07533e;--gold:#ffc857;--bg:#f4f7f5;--ink:#18231f;--muted:#66756e;--card:#fff;--line:#dce6e0}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Noto Sans Bengali",sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer;border:0;border-radius:10px;padding:11px 14px;font-weight:700}.primary{background:var(--green);color:#fff}.secondary{background:#e5f4ed;color:var(--dark)}.danger{background:#ffebeb;color:#a01818}.small{padding:7px 10px;font-size:.9rem}.wrap{max-width:1100px;margin:auto;padding:14px}.top{background:linear-gradient(120deg,var(--dark),var(--green));color:white;padding:22px 0}.brand{display:flex;align-items:center;gap:12px}.logo{width:48px;height:48px;border-radius:14px;background:#fff;color:var(--green);display:grid;place-items:center;font-weight:900;font-size:1.3rem}.brand h1{font-size:1.45rem;margin:0}.brand p{margin:3px 0 0;opacity:.9;font-size:.92rem}.topline{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.hero{padding:22px 0 8px}.hero h2{font-size:clamp(1.5rem,5vw,2.4rem);margin:0 0 8px}.hero p{margin:0;line-height:1.7}.notice{background:#fff8df;border:1px solid #f2dfa0;padding:12px;border-radius:12px;font-size:.9rem;margin:14px 0}.tools{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.tools input{flex:1;min-width:150px}.field,input,textarea,select{width:100%;border:1px solid var(--line);border-radius:10px;padding:11px;background:#fff;color:var(--ink)}label{display:block;font-size:.9rem;font-weight:700;margin:10px 0 5px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.product,.panel,.cartbox,.payment{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}.product img{width:100%;height:155px;object-fit:cover;background:#eaf1ed}.pbody{padding:12px}.pbody h3{margin:0 0 5px;font-size:1rem}.desc{color:var(--muted);font-size:.88rem;line-height:1.5;min-height:38px}.price{font-size:1.15rem;color:var(--green);font-weight:900;margin:9px 0}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row>*{flex:1}.sectiontitle{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:24px 0 12px}.sectiontitle h2{margin:0;font-size:1.25rem}.cartbox,.payment,.panel{padding:14px;margin-top:14px}.cartitem{display:flex;justify-content:space-between;gap:8px;border-bottom:1px solid var(--line);padding:10px 0}.cartitem:last-child{border:0}.muted{color:var(--muted);font-size:.9rem}.total{font-size:1.2rem;font-weight:900;margin:12px 0}.hidden{display:none!important}.adminhead{display:flex;justify-content:space-between;align-items:center;gap:8px}.formgrid{display:grid;grid-template-columns:1fr;gap:4px}.footer{text-align:center;color:var(--muted);font-size:.85rem;padding:28px 10px}.floatcart{position:sticky;bottom:8px;display:flex;justify-content:center;pointer-events:none;margin-top:12px}.floatcart button{pointer-events:auto;box-shadow:0 4px 18px #0002}.pill{display:inline-block;background:#e5f4ed;color:var(--dark);border-radius:999px;padding:4px 9px;font-size:.8rem}
+@media(min-width:650px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}.formgrid{grid-template-columns:1fr 1fr}.product img{height:190px}.wrap{padding:18px}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap">
+  <div class="topline"><div class="brand"><div class="logo">AS</div><div><h1>AmarShopnno.com</h1><p>আপনার পছন্দ, আপনার অনলাইন শপ</p></div></div><button class="secondary" onclick="toggleCart()">🛒 কার্ট (<span id="cartCount">0</span>)</button></div>
+  <div class="hero"><h2>পছন্দের পণ্য কিনুন সহজেই</h2><p>পণ্য বেছে নিন, কার্টে যোগ করুন এবং WhatsApp-এ অর্ডার পাঠান।</p></div>
+</div></header>
+<main class="wrap">
+<div class="notice">ℹ️ এটি একটি স্ট্যাটিক ডেমো শপ। অর্ডার WhatsApp-এ পাঠানো হবে; পেমেন্ট যাচাই স্বয়ংক্রিয় নয়। অ্যাডমিন প্যানেল খুলতে নিচের “অ্যাডমিন” বোতাম ব্যবহার করুন।</div>
+<div class="tools"><input id="search" placeholder="পণ্যের নাম লিখে খুঁজুন…" oninput="renderProducts()"><button class="secondary" onclick="toggleAdmin()">⚙️ অ্যাডমিন</button></div>
+<section><div class="sectiontitle"><h2>🛍️ আমাদের পণ্য</h2><span class="pill" id="productCount">0টি পণ্য</span></div><div id="products" class="grid"></div></section>
+
+<section id="cartSection" class="cartbox hidden">
+  <div class="sectiontitle"><h2>🛒 আপনার কার্ট</h2><button class="small secondary" onclick="toggleCart()">বন্ধ করুন</button></div>
+  <div id="cartItems"></div><div class="total">সর্বমোট: ৳<span id="cartTotal">0</span></div>
+  <label for="customerName">আপনার নাম</label><input id="customerName" placeholder="নাম লিখুন">
+  <label for="customerPhone">মোবাইল নম্বর</label><input id="customerPhone" inputmode="tel" placeholder="01XXXXXXXXX">
+  <label for="customerAddress">ডেলিভারি ঠিকানা</label><textarea id="customerAddress" rows="2" placeholder="গ্রাম/এলাকা, উপজেলা, জেলা"></textarea>
+  <label for="paymentMethod">পেমেন্ট পদ্ধতি</label><select id="paymentMethod"><option value="Cash on Delivery">ক্যাশ অন ডেলিভারি</option><option value="বিকাশ">বিকাশ</option><option value="নগদ">নগদ</option></select>
+  <button class="primary" style="width:100%;margin-top:12px" onclick="sendOrder()">WhatsApp-এ অর্ডার পাঠান</button>
+</section>
+
+<section class="payment"><div class="sectiontitle"><h2>💳 পেমেন্ট তথ্য</h2></div>
+<p>বিকাশ: <strong id="bkashText">01581503259</strong> <button class="small secondary" onclick="copyText('01581503259')">কপি</button></p>
+<p>নগদ: <strong id="nagadText">01581503259</strong> <button class="small secondary" onclick="copyText('01581503259')">কপি</button></p>
+<p class="muted">টাকা পাঠানোর আগে বিক্রেতার সঙ্গে নম্বর ও পেমেন্টের ধরন নিশ্চিত করুন। PIN বা OTP কখনো কাউকে দেবেন না।</p></section>
+
+<section id="adminPanel" class="panel hidden">
+<div class="adminhead"><h2 style="margin:0">⚙️ পণ্য পরিচালনা</h2><button class="small secondary" onclick="toggleAdmin()">বন্ধ করুন</button></div>
+<p class="muted">এখানে পরিবর্তন শুধু এই ব্রাউজারেই সংরক্ষিত হবে। অন্য ক্রেতাদের ডিভাইসে দেখা যাবে না।</p>
+<div class="formgrid">
+<div><label for="adminName">পণ্যের নাম</label><input id="adminName" placeholder="যেমন: সুন্দর জুতা"></div>
+<div><label for="adminPrice">দাম (টাকা)</label><input id="adminPrice" type="number" min="0" placeholder="500"></div>
+<div><label for="adminImage">ছবির URL</label><input id="adminImage" placeholder="https://... (ছবির লিংক)"></div>
+<div><label for="adminDesc">বিবরণ</label><textarea id="adminDesc" rows="2" placeholder="পণ্যের বিবরণ"></textarea></div>
+</div>
+<div class="row" style="margin-top:10px"><button class="primary" onclick="saveProduct()">পণ্য সংরক্ষণ</button><button class="secondary" onclick="resetForm()">ফর্ম খালি করুন</button><button class="secondary" onclick="exportProducts()">পণ্য ব্যাকআপ</button></div>
+<input type="file" id="importFile" accept="application/json,.json" style="margin-top:12px" onchange="importProducts(event)">
+<div class="sectiontitle"><h3>পণ্যের তালিকা</h3></div><div id="adminList"></div>
+<button class="danger" style="margin-top:12px" onclick="resetDemo()">ডেমো পণ্য ফিরিয়ে আনুন</button>
+</section>
+<div class="floatcart"><button class="primary" onclick="toggleCart()">🛒 কার্ট দেখুন · ৳<span id="stickyTotal">0</span></button></div>
+</main>
+<footer class="footer">© <span id="year"></span> AmarShopnno.com · সারা বাংলাদেশে ডেলিভারি (বিক্রেতার সঙ্গে নিশ্চিত করুন)</footer>
+<script>
+const WHATSAPP_NUMBER = "8801626874859"; // আন্তর্জাতিক ফরম্যাট: 880 + নম্বরের শুরুতে থাকা 0 বাদ
+const BKASH_NUMBER = "01581503259";
+const NAGAD_NUMBER = "01581503259";
+const STORAGE_PRODUCTS = "amarshopnno_products_v1";
+const STORAGE_CART = "amarshopnno_cart_v1";
+const demoProducts = [
+ {id:1,name:"নমুনা পণ্য ১",price:350,image:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80",description:"এখানে আপনার পণ্যের আসল নাম, বিবরণ ও দাম বসান।"},
+ {id:2,name:"নমুনা পণ্য ২",price:550,image:"https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80",description:"নতুন পণ্য যোগ করতে অ্যাডমিন প্যানেল ব্যবহার করুন।"},
+ {id:3,name:"নমুনা পণ্য ৩",price:250,image:"https://images.unsplash.com/photo-1543163521-1bf539c55dd2?auto=format&fit=crop&w=700&q=80",description:"ছবির URL হিসেবে সরাসরি ছবি-লিংক দিন।"}
+];
+let products = loadJSON(STORAGE_PRODUCTS, demoProducts);
+let cart = loadJSON(STORAGE_CART, []);
+let editingId = null;
+function loadJSON(key,fallback){try{const v=JSON.parse(localStorage.getItem(key));return Array.isArray(v)?v:fallback}catch(e){return fallback}}
+function saveAll(){localStorage.setItem(STORAGE_PRODUCTS,JSON.stringify(products));localStorage.setItem(STORAGE_CART,JSON.stringify(cart))}
+function money(n){return Number(n||0).toLocaleString("en-US")}
+function safe(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function renderProducts(){
+ const q=document.getElementById("search").value.trim().toLowerCase();
+ const shown=products.filter(p=>(p.name+" "+p.description).toLowerCase().includes(q));
+ document.getElementById("productCount").textContent=shown.length+"টি পণ্য";
+ document.getElementById("products").innerHTML=shown.length?shown.map(p=>`<article class="product"><img src="${safe(p.image||"")}" alt="${safe(p.name)}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect width=%22100%25%22 height=%22100%25%22 fill=%22%23e5eee9%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%2307533e%22 font-size=%2220%22%3Eপণ্যের ছবি%3C/text%3E%3C/svg%3E'"><div class="pbody"><h3>${safe(p.name)}</h3><div class="desc">${safe(p.description)}</div><div class="price">৳${money(p.price)}</div><button class="primary" style="width:100%" onclick="addToCart(${Number(p.id)})">কার্টে যোগ করুন</button></div></article>`).join(""):'<p>কোনো পণ্য পাওয়া যায়নি। অ্যাডমিন থেকে পণ্য যোগ করুন।</p>';
+}
+function addToCart(id){const p=products.find(x=>x.id===id);if(!p)return;const item=cart.find(x=>x.id===id);if(item)item.qty++;else cart.push({id:p.id,qty:1});saveAll();renderCart();alert("কার্টে যোগ হয়েছে");}
+function changeQty(id,delta){const x=cart.find(i=>i.id===id);if(!x)return;x.qty+=delta;if(x.qty<1)cart=cart.filter(i=>i.id!==id);saveAll();renderCart()}
+function removeCart(id){cart=cart.filter(i=>i.id!==id);saveAll();renderCart()}
+function renderCart(){
+ cart=cart.filter(i=>products.some(p=>p.id===i.id));let total=0,count=0;
+ const lines=cart.map(i=>{const p=products.find(x=>x.id===i.id);if(!p)return"";total+=Number(p.price)*i.qty;count+=i.qty;return `<div class="cartitem"><div><strong>${safe(p.name)}</strong><div class="muted">৳${money(p.price)} × ${i.qty} = ৳${money(p.price*i.qty)}</div><div class="row" style="margin-top:6px"><button class="small secondary" onclick="changeQty(${i.id},-1)">−</button><button class="small secondary" onclick="changeQty(${i.id},1)">+</button><button class="small danger" onclick="removeCart(${i.id})">মুছুন</button></div></div></div>`}).join("");
+ document.getElementById("cartItems").innerHTML=lines||'<p class="muted">কার্ট খালি। আগে পণ্য যোগ করুন।</p>';
+ document.getElementById("cartTotal").textContent=money(total);document.getElementById("stickyTotal").textContent=money(total);document.getElementById("cartCount").textContent=count;saveAll();
+}
+function toggleCart(){document.getElementById("cartSection").classList.toggle("hidden");document.getElementById("cartSection").scrollIntoView({behavior:"smooth",block:"start"})}
+function sendOrder(){
+ if(!cart.length){alert("আগে কার্টে পণ্য যোগ করুন।");return}
+ const name=document.getElementById("customerName").value.trim(),phone=document.getElementById("customerPhone").value.trim(),address=document.getElementById("customerAddress").value.trim(),payment=document.getElementById("paymentMethod").value;
+ if(!name||!phone||!address){alert("নাম, মোবাইল নম্বর ও ঠিকানা পূরণ করুন।");return}
+ let total=0;const lines=cart.map(i=>{const p=products.find(x=>x.id===i.id);if(!p)return"";total+=p.price*i.qty;return `• ${p.name} — ${i.qty} × ৳${p.price} = ৳${p.price*i.qty}`}).filter(Boolean).join("\n");
+ const msg=`নতুন অর্ডার — AmarShopnno.com\nনাম: ${name}\nমোবাইল: ${phone}\nঠিকানা: ${address}\nপেমেন্ট: ${payment}\n\nপণ্য:\n${lines}\n\nমোট: ৳${total}\nডেলিভারি চার্জ প্রযোজ্য হলে আলাদা করে নিশ্চিত করুন।`;
+ if(!/^8801\d{9}$/.test(WHATSAPP_NUMBER)){alert("কোডে WhatsApp নম্বরটি সঠিকভাবে বসান।");return}
+ window.open("https://wa.me/"+WHATSAPP_NUMBER+"?text="+encodeURIComponent(msg),"_blank");
+}
+function toggleAdmin(){document.getElementById("adminPanel").classList.toggle("hidden");renderAdmin();document.getElementById("adminPanel").scrollIntoView({behavior:"smooth",block:"start"})}
+function saveProduct(){
+ const name=document.getElementById("adminName").value.trim(),price=Number(document.getElementById("adminPrice").value),image=document.getElementById("adminImage").value.trim(),description=document.getElementById("adminDesc").value.trim();
+ if(!name||document.getElementById("adminPrice").value===""||price<0||!Number.isFinite(price)){alert("পণ্যের নাম ও সঠিক দাম দিন।");return}
+ if(image&&!/^https?:\/\//i.test(image)){alert("ছবির URL https:// বা http:// দিয়ে শুরু হতে হবে।");return}
+ if(editingId!==null){products=products.map(p=>p.id===editingId?{...p,name,price,image,description}:p)}else{products.push({id:Date.now(),name,price,image,description})}
+ resetForm();saveAll();renderProducts();renderAdmin();renderCart();alert("পণ্য সংরক্ষিত হয়েছে।");
+}
+function editProduct(id){const p=products.find(x=>x.id===id);if(!p)return;editingId=id;document.getElementById("adminName").value=p.name;document.getElementById("adminPrice").value=p.price;document.getElementById("adminImage").value=p.image||"";document.getElementById("adminDesc").value=p.description||"";document.getElementById("adminName").focus()}
+function deleteProduct(id){if(!confirm("এই পণ্যটি মুছবেন?"))return;products=products.filter(p=>p.id!==id);cart=cart.filter(i=>i.id!==id);saveAll();renderProducts();renderAdmin();renderCart()}
+function renderAdmin(){const el=document.getElementById("adminList");el.innerHTML=products.length?products.map(p=>`<div class="cartitem"><div><strong>${safe(p.name)}</strong><div class="muted">৳${money(p.price)}</div></div><div class="row"><button class="small secondary" onclick="editProduct(${p.id})">সম্পাদনা</button><button class="small danger" onclick="deleteProduct(${p.id})">মুছুন</button></div></div>`).join(""):'<p class="muted">এখনো কোনো পণ্য নেই।</p>'}
+function resetForm(){editingId=null;["adminName","adminPrice","adminImage","adminDesc"].forEach(id=>document.getElementById(id).value="")}
+function exportProducts(){const blob=new Blob([JSON.stringify(products,null,2)],{type:"application/json"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="amarshopnno-products-backup.json";a.click();URL.revokeObjectURL(url)}
+function importProducts(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=()=>{try{const data=JSON.parse(r.result);if(!Array.isArray(data)||!data.every(p=>p.name&&Number.isFinite(Number(p.price))))throw Error();products=data.map((p,i)=>({id:Number(p.id)||Date.now()+i,name:String(p.name),price:Number(p.price),image:String(p.image||""),description:String(p.description||"")}));saveAll();renderProducts();renderAdmin();renderCart();alert("ব্যাকআপ থেকে পণ্য আনা হয়েছে।")}catch(err){alert("ফাইলটি সঠিক পণ্য ব্যাকআপ নয়।")}e.target.value=""};r.readAsText(file)}
+function resetDemo(){if(!confirm("সব বর্তমান পণ্য মুছে নমুনা পণ্য ফিরিয়ে আনবেন? আগে ব্যাকআপ নিন।"))return;products=demoProducts.map(p=>({...p}));cart=[];saveAll();resetForm();renderProducts();renderAdmin();renderCart()}
+function copyText(t){if(navigator.clipboard){navigator.clipboard.writeText(t).then(()=>alert("নম্বর কপি হয়েছে")).catch(()=>prompt("নম্বর কপি করুন",t))}else prompt("নম্বর কপি করুন",t)}
+document.getElementById("year").textContent=new Date().getFullYear();
+document.getElementById("bkashText").textContent=BKASH_NUMBER;document.getElementById("nagadText").textContent=NAGAD_NUMBER;
+renderProducts();renderCart();renderAdmin();
+</script>
+</body>
+</html>
